@@ -7,6 +7,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/traccar/maplibre-google-maps.git"
+  },
   "keywords": [
     "mapbox",
     "mapbox-gl",
@@ -16,6 +20,10 @@
     "maplibre-gl-js",
     "google-maps"
   ],
-  "author": "Anton Tananaev",
-  "license": "Apache-2.0"
+  "author": "Anton Tananaev <anton@traccar.org>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/traccar/maplibre-google-maps/issues"
+  },
+  "homepage": "https://github.com/traccar/maplibre-google-maps#readme"
 }
