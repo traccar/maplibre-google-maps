@@ -1,0 +1,21 @@
+{
+  "name": "maplibre-google-maps",
+  "version": "1.0.0",
+  "description": "MapLibre Google Maps plugin",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mapbox",
+    "mapbox-gl",
+    "mapbox-gl-js",
+    "maplibre",
+    "maplibre-gl",
+    "maplibre-gl-js",
+    "google-maps"
+  ],
+  "author": "Anton Tananaev",
+  "license": "Apache-2.0"
+}

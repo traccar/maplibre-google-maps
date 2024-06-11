@@ -15,72 +15,12 @@
 <div id="map"></div>
 <script>
 const run = async () => {
-  const key = 'YOUR_GOOGLE_KEY';
-
-  const sessions = {};
-
-  maplibregl.addProtocol('google', async (params, abortController) => {
-    const url = new URL(params.url.replace('google://', 'https://'));
-    const mapType = url.hostname;
-    const key = url.searchParams.get('key');
-    const location = url.pathname;
-
-    let value = sessions[mapType];
-    if (!value) {
-      value = new Promise(async (resolve) => {
-        const response = await fetch(`https://tile.googleapis.com/v1/createSession?key=${key}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            mapType,
-            language: "en-US",
-            region: "US",
-            scale: "scaleFactor2x",
-            highDpi: true,
-          }),
-        });
-        const result = await response.json();
-        sessions[mapType] = result.session;
-        resolve();
-      });
-      sessions[mapType] = value;
-      await value;
-    } else if (value instanceof Promise) {
-      await value;
-    }
-
-    const session = sessions[mapType];
-
-   const t = await fetch(`https://tile.googleapis.com/v1/2dtiles${location}?session=${session}&key=${key}`);
-   const buffer = await t.arrayBuffer();
-   return {data: buffer};
- });
-
-  const style = {
-    "version": 8,
-    "sources": {
-      "osm": {
-        "type": "raster",
-        "tiles": [`google://roadmap/{z}/{x}/{y}?key=${key}`],
-        "tileSize": 256,
-        "attribution": "&copy; Google Maps",
-        "maxzoom": 19,
-      }
-    },
-    "layers": [
-      {
-        "id": "osm",
-        "type": "raster",
-        "source": "osm",
-      }
-    ]
-  };
+  import { googleProtocol, createGoogleStyle } from './index.js';
+  maplibregl.addProtocol('google', googleProtocol);
   const map = new maplibregl.Map({
     container: 'map',
-    style: style,
+    style: createGoogleStyle('google', 'roadmap', 'YOUR_GOOGLE_KEY'),
   });
-};  
-run();
 </script>
 </body>
 </html>
