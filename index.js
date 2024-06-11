@@ -1,6 +1,6 @@
 const sessions = {};
 
-export async function googleProtocol(a, b) => {
+export async function googleProtocol(a, b) {
   const url = new URL(params.url.replace('google://', 'https://'));
   const mapType = url.hostname;
   const key = url.searchParams.get('key');
@@ -36,7 +36,7 @@ export async function googleProtocol(a, b) => {
   return { data };
 }
 
-export function createGoogleStyle(id, mapType, key) => {
+export function createGoogleStyle(id, mapType, key) {
   return {
     "version": 8,
     "sources": {
