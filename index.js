@@ -1,6 +1,6 @@
 const sessions = {};
 
-export async function googleProtocol(a, b) {
+export async function googleProtocol(params, abortController) {
   const url = new URL(params.url.replace('google://', 'https://'));
   const mapType = url.hostname;
   const key = url.searchParams.get('key');
@@ -37,16 +37,9 @@ export async function googleProtocol(a, b) {
 }
 
 export function createGoogleStyle(id, mapType, key) {
-  return {
+  const style = {
     "version": 8,
     "sources": {
-      "osm": {
-        "type": "raster",
-        "tiles": [`google://${mapType}/{z}/{x}/{y}?key=${key}`],
-        "tileSize": 256,
-        "attribution": "&copy; Google Maps",
-        "maxzoom": 19,
-      },
     },
     "layers": [
       {
@@ -56,4 +49,12 @@ export function createGoogleStyle(id, mapType, key) {
       },
     ],
   };
+  style.sources[id] = {
+    "type": "raster",
+    "tiles": [`google://${mapType}/{z}/{x}/{y}?key=${key}`],
+    "tileSize": 256,
+    "attribution": "&copy; Google Maps",
+    "maxzoom": 19,
+  };
+  return style;
 };
