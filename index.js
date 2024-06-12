@@ -2,36 +2,47 @@ const sessions = {};
 
 export async function googleProtocol(params, abortController) {
   const url = new URL(params.url.replace('google://', 'https://'));
-  const mapType = url.hostname;
+  const sessionKey = `${url.hostname}?${url.searchParams}`;
   const key = url.searchParams.get('key');
-  const location = url.pathname;
 
-  let value = sessions[mapType];
+  let value = sessions[sessionKey];
   if (!value) {
     value = new Promise(async (resolve) => {
+      const mapType = url.hostname;
+      const layerType = url.searchParams.get('layerType');
+      const overlay = url.searchParams.get('overlay');
+
+      const sessionRequest = {
+        mapType,
+        language: "en-US",
+        region: "US",
+        scale: "scaleFactor2x",
+        highDpi: true,
+      };
+      if (layerType) {
+        sessionRequest.layerTypes = [layerType];
+      }
+      if (overlay) {
+        sessionRequest.overlay = overlay === 'true';
+      }
+
       const response = await fetch(`https://tile.googleapis.com/v1/createSession?key=${key}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          mapType,
-          language: "en-US",
-          region: "US",
-          scale: "scaleFactor2x",
-          highDpi: true,
-        }),
+        body: JSON.stringify(sessionRequest),
       });
       const result = await response.json();
-      sessions[mapType] = result.session;
+      sessions[sessionKey] = result.session;
       resolve();
     });
-    sessions[mapType] = value;
+    sessions[sessionKey] = value;
     await value;
   } else if (value instanceof Promise) {
     await value;
   }
 
-  const session = sessions[mapType];
-  const tile = await fetch(`https://tile.googleapis.com/v1/2dtiles${location}?session=${session}&key=${key}`);
+  const session = sessions[sessionKey];
+  const tile = await fetch(`https://tile.googleapis.com/v1/2dtiles${url.pathname}?session=${session}&key=${key}`);
   const data = await tile.arrayBuffer();
   return { data };
 }
