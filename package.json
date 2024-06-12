@@ -1,6 +1,6 @@
 {
   "name": "maplibre-google-maps",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "MapLibre Google Maps plugin",
   "main": "index.js",
   "type": "module",
