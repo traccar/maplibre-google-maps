@@ -3,12 +3,12 @@
 Using this plugin you can add Google Maps layers to MapLibre GL JS.
 
 
-To install use the following NPM command:
+To install dependency use the following NPM command:
 ```bash
 npm install maplibre-google-maps
 ```
 
-The libary includes two methods:
+The libary includes two functions:
 - `googleProtocol` - protocol handler
 - `createGoogleStyle` - function to create an instance map style
 
