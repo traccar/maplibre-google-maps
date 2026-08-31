@@ -1,6 +1,6 @@
 # MapLibre Google Maps plugin
 
-Using this plugin you can add Google Maps layers to MapLibre GL JS.
+Using this plugin you can add Google Maps layers to MapLibre GL JS. Maintained by the [Traccar](https://www.traccar.org) project, which uses it in the [Traccar web app](https://github.com/traccar/traccar-web) to support Google Maps as a map layer.
 
 
 To install dependency use the following NPM command:
